@@ -1,0 +1,38 @@
+@import "bootstrap/scss/functions";
+
+// 2. Include any default variable overrides here
+
+// 3. Include remainder of required Bootstrap stylesheets (including any separate color mode stylesheets)
+@import "bootstrap/scss/variables";
+@import "bootstrap/scss/variables-dark";
+
+// 4. Include any default map overrides here
+
+
+$primary: #FBAF0B;
+$secondary: #1D2F3B;
+$dark: #000515;
+$horizon: #DEE2E6;
+$light: #FFFFFF; // d-panel color
+$gray: #465865; // text color
+$info: #FFFFFF; // body background-color
+$border: #98A1A9; // border color
+$embossed: #A9D2E9; // inside panel color - "don't pay attention to this element"
+$highlight: #DC7100; // links and highlights
+
+
+// Disabled: #98A1A9
+// Disabled background text: #DEE2E6
+
+$theme-colors: map-merge($theme-colors, (
+    "primary": $primary,
+    "secondary": $secondary,
+    // "dark": $dark,
+    // "horizon": $horizon,
+    // "light": $light,
+    // "info": $info,
+    // "gray": $gray,
+    // "highlight": $highlight,
+    // Used in the API Explorer
+    "blue": #38b3f9
+));

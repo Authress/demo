@@ -1,0 +1,53 @@
+{
+  "name": "vue",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "preview": "vite preview",
+    "build": "vue-tsc && vite build",
+    "start": "vite --port=8080",
+    "demo": "run-p start server",
+    "server": "sleep 1; eval $(aws-sso eval  --account 337107884712 --role AdministratorAccess) && npx nodemon server/src/server.ts",
+    "server-ts": "ts-node-dev --respawn --pretty server/src/index.ts"
+  },
+  "dependencies": {
+    "@authress/login": "^2",
+    "@popperjs/core": "^2.11.8",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/helmet": "^4.0.0",
+    "@types/json-stringify-safe": "^5.0.0",
+    "@types/node": "^18.15.3",
+    "authress-sdk": "^2.0",
+    "aws-sdk": "^2.1490.0",
+    "base64url": "^3.0.1",
+    "bootstrap": "^5.3.2",
+    "express": "^4.17.1",
+    "header-case-normalizer": "^1.0.3",
+    "lodash": "^4.17.21",
+    "morgan": "^1.10.0",
+    "nodemon": "^2.0.21",
+    "npm-run-all": "^4.1.5",
+    "openapi-explorer": "^1.0.551",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "ts-node-esm": "^0.0.6",
+    "typescript": "^5.0.2",
+    "vue": "^3.2.47",
+    "vue-router": "4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.1.0",
+    "body-parser": "^1.20.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "error-object-polyfill": "^1.2.25",
+    "json-stringify-safe": "^5.0.1",
+    "sass": "^1.69.5",
+    "serve": "^14.2.0",
+    "short-uuid": "^4.2.2",
+    "vite": "^4.3.9",
+    "vue-tsc": "^1.4.2"
+  }
+}
