@@ -1,9 +1,10 @@
-import authress, { AuthressClient, ServiceClientTokenProvider, UserResources, UserIdentity, Connection, Tenant, UnauthorizedError, ApiError } from 'authress-sdk';
+import authress, { AuthressClient, ServiceClientTokenProvider, UserResources, UserIdentity, Connection, Tenant, UnauthorizedError, ApiError, TokenVerifier } from 'authress-sdk';
 const { ConnectionData } = authress;
 import { AssignedUserRoles } from './dtos';
 import encryptionManager from './encryptionManager';
 
 const authressDomain = 'https://a48copjrf5qrjn1niakfzfqlp.api-eu-west.authress.io';
+const authressLoginDomain = 'https://a48copjrf5qrjn1niakfzfqlp.login.authress.io';
 
 let cachedProperties = null;
 class AuthressPermissionsWrapper {
@@ -15,7 +16,6 @@ class AuthressPermissionsWrapper {
     const serviceClientAccessKey = await encryptionManager.getKey();
     await new ServiceClientTokenProvider(serviceClientAccessKey).getToken();
     return cachedProperties = {
-      authressDomain,
       serviceClientAccessKey
     };
   }
@@ -26,12 +26,13 @@ class AuthressPermissionsWrapper {
   }
 
   async verifyUserToken(token: string) {
-    return this.getAuthressClient().verifyToken(token);
+    return TokenVerifier(authressLoginDomain, token);
   }
 
   async hasAccessToResource(userId: string, resourceId: string, permission: string): Promise<boolean> {
     try {
-      await this.getAuthressClient().userPermissions.authorizeUser(userId, resourceId, permission);
+      const authressClient = await this.getAuthressClient();
+      await authressClient.userPermissions.authorizeUser(userId, resourceId, permission);
       return true;
     } catch (error) {
       if (error instanceof UnauthorizedError) {
@@ -43,7 +44,8 @@ class AuthressPermissionsWrapper {
 
   // Get all the resources by permission that a user has access to. This only contains explicit permissions specified in Authress
   async getUserResources(resourceUri: string, permission: string = 'READ'): Promise<UserResources> {
-    const response = await this.getAuthressClient().userPermissions.getUserResources(null, resourceUri, 20, null, permission);
+    const authressClient = await this.getAuthressClient();
+    const response = await authressClient.userPermissions.getUserResources(null, resourceUri, 20, null, permission);
     return response.data;
   }
 
@@ -51,7 +53,8 @@ class AuthressPermissionsWrapper {
   async getUserDataMap(userIds: Array<string>): Promise<Record<string, UserIdentity>> {
     const userList: Array<UserIdentity | null> = await Promise.all(userIds.map(async userId => {
       try {
-        const result = await this.getAuthressClient().users.getUser(userId);
+        const authressClient = await this.getAuthressClient();
+        const result = await authressClient.users.getUser(userId);
         return result.data;
       } catch (error) {
         if (error instanceof ApiError && error.status === 404) {
@@ -71,7 +74,8 @@ class AuthressPermissionsWrapper {
   /*************************************************/
 
   async getUsersThatHaveAccessToAccount(accountId: string): Promise<Array<AssignedUserRoles>> {
-    const result = await this.getAuthressClient().resources.getResourceUsers(`accounts/${accountId}`);
+    const authressClient = await this.getAuthressClient();
+    const result = await authressClient.resources.getResourceUsers(`accounts/${accountId}`);
     return result.data.users.map(u => ({
       userId: u.userId,
       roles: u.roles.map(r => r.roleId)
@@ -79,7 +83,8 @@ class AuthressPermissionsWrapper {
   }
 
   async getUsersThatHaveAccessToResource(accountId: string, resourceId: string): Promise<Array<AssignedUserRoles>> {
-    const result = await this.getAuthressClient().resources.getResourceUsers(`accounts/${accountId}/resources/${resourceId}`);
+    const authressClient = await this.getAuthressClient();
+    const result = await authressClient.resources.getResourceUsers(`accounts/${accountId}/resources/${resourceId}`);
     return result.data.users.map(u => ({
       userId: u.userId,
       roles: u.roles.map(r => r.roleId)
@@ -91,7 +96,8 @@ class AuthressPermissionsWrapper {
     const recordId = `A:${accountId}:U:${userId}`;
 
     try {
-      await this.getAuthressClient().accessRecords.deleteRecord(recordId);
+      const authressClient = await this.getAuthressClient();
+      await authressClient.accessRecords.deleteRecord(recordId);
     } catch (error) {
       if (error instanceof ApiError && error.status === 404) {
         return;
@@ -107,9 +113,10 @@ class AuthressPermissionsWrapper {
     const recordId = `A:${accountId}:U:${userId}`;
     const resourceUris: string[] = Array.isArray(rawResourceUris) ? rawResourceUris : [rawResourceUris];
 
+    const authressClient = await this.getAuthressClient();
 
     try {
-      const response = await this.getAuthressClient().accessRecords.getRecord(recordId);
+      const response = await authressClient.accessRecords.getRecord(recordId);
       if (response.data.status === 'DELETED') {
         throw { status: 404 };
       }
@@ -118,7 +125,7 @@ class AuthressPermissionsWrapper {
       const newStatements = response.data.statements.filter(s => !s.resources.some(r => resourceUriMap[r.resourceUri.replace(/[/][*]$/, '')]))
         .concat(newRoles ? { resources: resourceUris.map(resourceUri => ({ resourceUri })), roles: Array.isArray(newRoles) ? newRoles : [newRoles] } : []);
 
-      await this.getAuthressClient().accessRecords.updateRecord(recordId, Object.assign({}, response.data,
+      await authressClient.accessRecords.updateRecord(recordId, Object.assign({}, response.data,
         { users: [{ userId }], statements: newStatements }
       ));
 
@@ -128,7 +135,7 @@ class AuthressPermissionsWrapper {
         throw error;
       }
 
-      await this.getAuthressClient().accessRecords.createRecord({
+      await authressClient.accessRecords.createRecord({
         recordId,
         name: `Account: ${accountId}, User: ${userId}`,
         users: [{ userId }],
@@ -140,7 +147,8 @@ class AuthressPermissionsWrapper {
   /*************************************************/
 
   async getExplicitUserResources(userId: string, resourceUri: string, permission: string = 'READ'): Promise<UserResources> {
-    const response = await this.getAuthressClient().userPermissions.getUserResources(userId, resourceUri, 20, undefined, permission);
+    const authressClient = await this.getAuthressClient();
+    const response = await authressClient.userPermissions.getUserResources(userId, resourceUri, 20, undefined, permission);
     return response.data;
   }
 }

@@ -22,7 +22,7 @@ export default async function authressTokenValidation (
   const authorizationHeader = request.headers.authorization;
   if (!authorizationHeader) {
     response.status(401).json({
-      title: 'The response is a 401 to your request to this starter-kit. Your request failed the Authress Token Validator check in the src/authressTokenValidation.ts file',
+      title: 'The response is a 401 to your request to the demo. Your request failed the Authress Token Validator check in the src/authressTokenValidation.ts file',
       error: 'No authorization header was specified'
     });
     return;
@@ -33,16 +33,9 @@ export default async function authressTokenValidation (
     const userIdentity = await authressPermissionsWrapper.verifyUserToken(token);
     response.locals.userId = userIdentity.sub;
   } catch (error: any) {
-    const authressProperties = await authressPermissionsWrapper.getAuthressProperties();
-    if (authressProperties.authressDomain === 'https://a48copjrf5qrjn1niakfzfqlp.login.authress.io') {
-      response.status(401).json({
-        title: 'Your Authress custom domain is not set. Go to the src/authressPermissionsWrapper.ts and set the authressDomain at the top of the file. This should match your Authress Custom domain.',
-        error
-      });
-    }
     if (error.code === 'Unauthorized' || error.code === 'TokenVerificationError') {
       response.status(401).json({
-        title: 'The response is a 401 to your request to this starter-kit. Your request failed the Authress Token Validator check in the src/authressTokenValidation.ts file',
+        title: 'The response is a 401 to your request to the demo. Your request failed the Authress Token Validator check in the src/authressTokenValidation.ts file',
         error
       });
       return;

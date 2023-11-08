@@ -29,6 +29,9 @@ There is a demo experience that has a UI and an service API. The UI makes API ca
 
 ### Add Login verification
 * Add a middleware to get the token and verify it
+
+app.use(authressTokenValidation);
+
 * Demo that the UI doesn't work anymore because the user isn't logged in.
 * Add a guard in the UI that requires the user to log in.
 * Then they log in

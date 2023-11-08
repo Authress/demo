@@ -17,7 +17,11 @@ class ReportsService {
       } || {}
     });
 
-    return await response.json();
+    if (response.ok) {
+      return await response.json();
+    }
+    
+    throw Error('Unauthorized');
   }
 }
 

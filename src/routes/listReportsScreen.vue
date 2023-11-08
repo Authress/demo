@@ -9,17 +9,26 @@
       <div class="py-4">
         <h1>TPS Reports</h1>
 
-        <div style="border: 1px white solid; border-radius: 10px; padding: 2rem;">
-          <h5 class="mb-2">Here are your reports:</h5>
-
-          <div v-for="report in state.reports" :key="report.reportId">
-            <div class="hover-select" @click="goToReport(report.reportId)">
-              <div>Report: {{ report.name }}</div>
-              <div>ID: {{  report.reportId }}</div>
-            </div>
-            <hr>
+        <template v-if="state.displayError">
+          <div style="border: 1px var(--bs-danger) solid; border-radius: 10px; padding: 2rem; color: var(--bs-danger)">
+            You do not have access to view the reports, please log in.
           </div>
-        </div>
+        </template>
+
+        <template v-else>
+          <div style="border: 1px white solid; border-radius: 10px; padding: 2rem;">
+            <h5 class="mb-2">Here are your reports:</h5>
+
+            <div v-for="report in state.reports" :key="report.reportId">
+              <div class="hover-select" @click="goToReport(report.reportId)">
+                <div>Report: {{ report.name }}</div>
+                <div>ID: {{  report.reportId }}</div>
+              </div>
+              <hr>
+            </div>
+          </div>
+        </template>
+
       </div>
     </template>
     <report-screen v-else :report="selectedReport" />
@@ -37,9 +46,10 @@ const route = useRoute();
 
 interface State {
   reports: Array<Report>;
+  displayError: Boolean;
 };
 
-const state = reactive<State>({ reports: [] });
+const state = reactive<State>({ reports: [], displayError: false });
 
 const selectedReport = computed(() => {
   return state.reports.find(r => r.reportId === route.params.reportId);
@@ -47,6 +57,8 @@ const selectedReport = computed(() => {
 
 reportsService.getReports().then(reports => {
   state.reports = reports;
+}).catch(() => {
+  state.displayError = true;
 });
 
 
