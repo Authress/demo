@@ -4,7 +4,10 @@ import express, { NextFunction, Request, Response } from 'express';
 import resourceRepository from './dataRepository';
 import authressPermissionsWrapper from '../utilities/authressPermissionsWrapper';
 
-authressPermissionsWrapper.getAuthressProperties();
+function forbidden(response) {
+  response.status(403).json({ title: 'User does not have access to read this resources' });
+  return;
+}
 
 const reportController = express.Router();
 export default reportController;
@@ -14,12 +17,14 @@ export default reportController;
 reportController.get('/', async (request: Request, response: Response, next: NextFunction) => {
   const userId = response.locals.userId;
 
-  // Ensure user has permissions to read the resource resources (userId, resourceUri, permission)
-  // const userHasPermissionToResource = await authressPermissionsWrapper.hasAccessToResource(userId, `/reports/${reportId}`, 'READ');
-  // if (!userHasPermissionToResource) {
-  //   response.status(403).json({ title: 'User does not have access to read this resources' });
-  //   return;
+  /******************** Add Authorization Check ********************/
+
+  // const result = await authressPermissionsWrapper.hasAccessToResource(userId, '/reports', 'Reports:Get');
+  // if (!result) {
+  //   return forbidden(response);
   // }
+
+  /*****************************************************************/
 
   try {
     const resourceObject = await resourceRepository.getAll();

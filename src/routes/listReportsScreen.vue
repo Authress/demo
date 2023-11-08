@@ -9,9 +9,29 @@
       <div class="py-4">
         <h1>TPS Reports</h1>
 
-        <template v-if="state.displayError">
+        <template v-if="state.displayError === 'Unauthorized'">
           <div style="border: 1px var(--bs-danger) solid; border-radius: 10px; padding: 2rem; color: var(--bs-danger)">
             You do not have access to view the reports, please log in.
+            <br>
+            <template v-if="userId">
+              <br>
+              User ID: {{ userId }}
+            </template>
+          </div>
+        </template>
+
+        <template v-if="state.displayError === 'Forbidden'">
+          <div style="border: 1px var(--bs-danger) solid; border-radius: 10px; padding: 2rem; color: var(--bs-danger)">
+            You do not have sufficient access to view reports.
+            <br>
+            <template v-if="userId">
+              <br>
+              User ID: {{ userId }}
+              <br>
+              Missing Permission: <strong>Reports:Get</strong>
+              <br>
+              Resource: <strong>Reports</strong>
+            </template>
           </div>
         </template>
 
@@ -41,24 +61,30 @@ import { reactive, computed } from 'vue';
 import Navbar from '../components/navbar.vue';
 import reportScreen from './reportScreen.vue';
 import reportsService, { Report } from './reportsService';
+import { authressLoginClient } from '../authressClient';
 
 const route = useRoute();
 
 interface State {
   reports: Array<Report>;
-  displayError: Boolean;
+  displayError: String;
 };
 
-const state = reactive<State>({ reports: [], displayError: false });
+const state = reactive<State>({ reports: [], displayError: '' });
 
 const selectedReport = computed(() => {
   return state.reports.find(r => r.reportId === route.params.reportId);
 });
 
+const userId = computed(() => {
+  const userIdentity = authressLoginClient.getUserIdentity();
+  return userIdentity?.sub;
+});
+
 reportsService.getReports().then(reports => {
   state.reports = reports;
-}).catch(() => {
-  state.displayError = true;
+}).catch(error => {
+  state.displayError = error.message;
 });
 
 

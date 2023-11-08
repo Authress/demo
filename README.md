@@ -30,15 +30,30 @@ There is a demo experience that has a UI and an service API. The UI makes API ca
 ### Add Login verification
 * Add a middleware to get the token and verify it
 
+```js server.ts
 app.use(authressTokenValidation);
+```
 
 * Demo that the UI doesn't work anymore because the user isn't logged in.
 * Add a guard in the UI that requires the user to log in.
+
+```js main.ts
+await ensureUserIsLoggedIn(next);
+```
+
 * Then they log in
 
 ### Add authorization
 * Navigate to a specific resource
 * We'll add a check to the service code which ensures that a user has the right permission to the resource
+
+```js reportsController.ts
+const result = await authressPermissionsWrapper.hasAccessToResource(userId, '/reports', 'Reports:Get');
+  if (!result) {
+    return forbidden(response);
+  }
+```
+
 * Then we'll see that they don't
 * Then go to Authress and configure:
   * A new role

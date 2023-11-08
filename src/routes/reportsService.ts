@@ -1,5 +1,3 @@
-// import authress, { AuthressClient, ServiceClientTokenProvider, UserResources, UserIdentity, Connection, Tenant, UnauthorizedError, ApiError } from 'authress-sdk';
-
 import { authressLoginClient } from "../authressClient";
 
 const serviceUrl = 'http://localhost:8081';
@@ -20,8 +18,12 @@ class ReportsService {
     if (response.ok) {
       return await response.json();
     }
-    
-    throw Error('Unauthorized');
+
+    if (response.status === 401) {
+      throw Error('Unauthorized');
+    }
+
+    throw Error('Forbidden');
   }
 }
 
