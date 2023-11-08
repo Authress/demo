@@ -16,7 +16,7 @@ try {
     authressLoginHostUrl: 'https://a48copjrf5qrjn1niakfzfqlp.login.authress.io',
   });
 
-  loginClient.userSessionExists();
+  // loginClient.userSessionExists();
 } catch (error) {
   loginClient = null;
   console.error(error);
@@ -25,3 +25,13 @@ try {
 export const starterKitIsConfiguredCorrectly = !!loginClient;
 
 export const authressLoginClient = loginClient;
+
+export async function ensureUserIsLoggedIn(next: () => void) {
+  const userIsLoggedIn = await loginClient.userSessionExists();
+  if (!userIsLoggedIn) {
+    console.log('User is not logged on the protected route, redirecting to unauthorized');
+    next('Unauthorized');
+    return;
+  }
+  next();
+}

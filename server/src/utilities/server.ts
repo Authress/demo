@@ -1,5 +1,4 @@
 // public imports
-import * as dotenv from "dotenv";
 import express from "express";
 import boilerplate from "./boilerplate";
 
@@ -7,9 +6,7 @@ import boilerplate from "./boilerplate";
 import authressTokenValidation from './authressTokenValidation';
 
 // Resources Manages a specific resource in a customer account
-import ReportsController from './reports/reportsController';
-
-dotenv.config();
+import ReportsController from '../reports/reportsController';
 
 const app = express();
 boilerplate.setup(app);

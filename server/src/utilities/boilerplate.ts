@@ -24,7 +24,6 @@ class BoilerPlate {
     httpServer.setTimeout(60 * 1000);
     httpServer.listen(port, () => {
       console.log(`App Running on http://localhost:${port}`);
-      console.log(`\n*******************************************\nTry hitting one of the existing endpoints: curl -XGET http://localhost:${port}/accounts -H"Authorization: Bearer YOUR_TOKEN"`)
     });
 
     // Body handling

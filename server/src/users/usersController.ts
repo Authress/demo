@@ -2,7 +2,7 @@ import shortUuid from 'short-uuid';
 import { AuthressClient } from 'authress-sdk';
 import express, { NextFunction, Request, Response } from 'express';
 
-import authressPermissionsWrapper from '../authressPermissionsWrapper';
+import authressPermissionsWrapper from '../utilities/authressPermissionsWrapper';
 import accountsRepository from '../accounts/accountsRepository';
 
 const usersController = express.Router();

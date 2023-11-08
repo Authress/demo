@@ -821,10 +821,10 @@ async-array-reduce@^0.2.1:
   resolved "https://registry.yarnpkg.com/async-array-reduce/-/async-array-reduce-0.2.1.tgz#c8be010a2b5cd00dea96c81116034693dfdd82d1"
   integrity sha512-/ywTADOcaEnwiAnOEi0UB/rAcIq5bTFfCV9euv3jLYFUMmy6KvKccTQUnLlp8Ensmfj43wHSmbGiPqjsZ6RhNA==
 
-authress-sdk@^2.0:
-  version "2.0.69"
-  resolved "https://registry.yarnpkg.com/authress-sdk/-/authress-sdk-2.0.69.tgz#01d653455c27f23611d6b9d3b2c8ae32a7628d3a"
-  integrity sha512-iG3fFmmPUaA9I3uneeUfMjIErd9kO0OBjqRiE9yRrrlOsxfI8RR98S70KQEUFIXu7hMLJdP14Iu7Zx6cmd82uA==
+authress-sdk@^2.1.95:
+  version "2.1.95"
+  resolved "https://registry.yarnpkg.com/authress-sdk/-/authress-sdk-2.1.95.tgz#4138953a39905dd2e83396ce4674f63ec403a1ba"
+  integrity sha512-zlF4xtsRcFSp0nnbhlMRVYL7Hct2tyQQG3mqu4RY+z6m//rISRMUtEwvqQctrpApuLQhWHAh5sMHLK1cNlygbA==
   dependencies:
     axios "^0.21"
     base64url "^3.0.1"

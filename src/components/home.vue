@@ -2,7 +2,7 @@
   <div class="center-container">
       <div>
         <a href="https://authress.io" target="_blank">
-          <img src="./assets/logo.svg" class="logo" alt="Authress logo" />
+          <img src="../assets/logo.svg" class="logo" alt="Authress logo" />
         </a>
       </div>
       
@@ -32,20 +32,6 @@ const router = useRouter();
 const start = () => {
   router.push('/reports');
 }
-
-// const makeApiCallWithUserToken = async () => {
-//   const userAccessToken = await authressLoginClient.ensureToken({});
-//   try {
-//     const result = await fetch('http://localhost:8081/api/endpoint', {
-//       headers: {
-//         Authorization: `Bearer ${userAccessToken}`,
-//       },
-//     });
-//     console.log('API Call request', result);
-//   } catch (error) {
-//     console.error('Error calling API', error);
-//   }
-// }
 </script>
 
 <style lang="scss" scoped>

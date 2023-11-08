@@ -47,11 +47,11 @@
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <div class="" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         </ul>
         <form v-if="!state.userIdentity" class="d-flex">
-          <button class="btn btn-outline-primary" type="submit" @click="login">Login</button>
+          <button class="btn btn-outline-primary" type="submit" @click.prevent="login">Login</button>
         </form>
 
         <template v-else class="btn btn-outline-primary" type="submit" @click="logout">
@@ -59,16 +59,12 @@
             <li class="nav-item dropdown" style="border: none !important; ">
               <a class="nav-link text-primary" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
                 <i v-if="!state.userIdentity.picture" class="fa fa-user-circle fa-2x" />
-                <img v-else :src="state.userIdentity.picture" style="border-radius: 100%; width: 40px">
+                <img v-else :src="state.userIdentity.picture" referrerpolicy="no-referrer" style="border-radius: 100%; width: 40px">
               </a>
               <ul class="dropdown-menu" style="width: 250px">
                 <li><span class="dropdown-item text-secondary" href="#">{{ state.userIdentity.name }}</span></li>
                 <li><hr class="dropdown-divider text-dark"></li>
                 <li><a class="dropdown-item text-dark" href="#" @click.prevent="logout">Logout</a></li>
-                <!-- <li><a class="dropdown-item text-dark" href="#">Another action</a></li>
-                <li><a class="dropdown-item text-dark" href="#">Something else here</a></li> -->
-                <!-- <li><hr class="dropdown-divider text-dark"></li>
-                <li><a class="dropdown-item text-dark" href="#">Separated link</a></li> -->
               </ul>
             </li>
           </ul>
@@ -90,7 +86,8 @@ const state = reactive<State>({ userIdentity: null });
 
 const login = async () => {
   console.log('User logging in');
-  await authressLoginClient.authenticate({});
+  const result = await authressLoginClient.authenticate({});
+  console.log('*****', result);
   // WHY DOESN"T THIS BUTTON WORK!
 };
 
@@ -99,21 +96,6 @@ const logout = async () => {
   await authressLoginClient.logout(new URL(window.location.href).origin);
   state.userIdentity = null;
 };
-
-
-// const makeApiCallWithUserToken = async () => {
-//   const userAccessToken = await authressLoginClient.ensureToken({});
-//   try {
-//     const result = await fetch('http://localhost:8081/api/endpoint', {
-//       headers: {
-//         Authorization: `Bearer ${userAccessToken}`,
-//       },
-//     });
-//     console.log('API Call request', result);
-//   } catch (error) {
-//     console.error('Error calling API', error);
-//   }
-// }
 
 if (starterKitIsConfiguredCorrectly) {
   authressLoginClient.userSessionExists().then((userIsLoggedIn: any) => {
