@@ -62,10 +62,6 @@ class AuthressPermissionsWrapper {
     return filteredUserList.reduce((acc: Record<string, UserIdentity>, user: UserIdentity) => { acc[user.userId] = user; return acc; }, {});
   }
 
-  /*************************************************/
-  /*********** USER ROLE MANAGEMENT ****************/
-  /*************************************************/
-
   async getUsersThatHaveAccessToAccount(accountId: string): Promise<Array<AssignedUserRoles>> {
     const authressClient = await this.getAuthressClient();
     const result = await authressClient.resources.getResourceUsers(`accounts/${accountId}`);

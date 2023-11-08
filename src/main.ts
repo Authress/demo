@@ -21,7 +21,11 @@ const router = createRouter({
       name: 'ReportList',
       component: ListReportsScreen,
       beforeEnter: async (to, from, next) => {
+        /************* Route Guard *************/
+
         // await ensureUserIsLoggedIn(next);
+
+        /**************************************/
         next();
       }
     }

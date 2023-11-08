@@ -11,11 +11,11 @@ import ReportsController from '../reports/reportsController';
 const app = express();
 boilerplate.setup(app);
 
-/************* Middleware **************/
+/************* Middleware *************/
 
-app.use(authressTokenValidation);
+// app.use(authressTokenValidation);
 
-/***************************************/
+/**************************************/
 
 app.use('/reports', ReportsController)
 

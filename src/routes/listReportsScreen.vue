@@ -25,7 +25,7 @@
           </div>
         </template>
 
-        <template v-if="state.displayError === 'Forbidden'">
+        <template v-else-if="state.displayError === 'Forbidden'">
           <div style="border: 1px var(--bs-danger) solid; border-radius: 10px; padding: 2rem; color: var(--bs-danger)">
             You do not have sufficient access to view reports.
             <br>
