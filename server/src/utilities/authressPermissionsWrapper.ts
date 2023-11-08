@@ -42,13 +42,6 @@ class AuthressPermissionsWrapper {
     }
   }
 
-  // Get all the resources by permission that a user has access to. This only contains explicit permissions specified in Authress
-  async getUserResources(resourceUri: string, permission: string = 'READ'): Promise<UserResources> {
-    const authressClient = await this.getAuthressClient();
-    const response = await authressClient.userPermissions.getUserResources(null, resourceUri, 20, null, permission);
-    return response.data;
-  }
-
   // Convert a list of userIds to list of  user data objects
   async getUserDataMap(userIds: Array<string>): Promise<Record<string, UserIdentity>> {
     const userList: Array<UserIdentity | null> = await Promise.all(userIds.map(async userId => {
@@ -146,7 +139,7 @@ class AuthressPermissionsWrapper {
 
   /*************************************************/
 
-  async getExplicitUserResources(userId: string, resourceUri: string, permission: string = 'READ'): Promise<UserResources> {
+  async getUserResources(userId: string, resourceUri: string, permission: string = 'READ'): Promise<UserResources> {
     const authressClient = await this.getAuthressClient();
     const response = await authressClient.userPermissions.getUserResources(userId, resourceUri, 20, undefined, permission);
     return response.data;

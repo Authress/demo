@@ -1,3 +1,5 @@
+import { UserResources } from "authress-sdk";
+
 const reports: Report = [
   { reportId: '001',
     name: 'First Report',
@@ -12,8 +14,18 @@ class DataRepository {
     return reports.find(r => r.reportId === reportId);
   }
 
-  async getAll(): Promise<Report[]> {
-    return reports;
+  async getAll(allowedReports: UserResources): Promise<Report[]> {
+    if (!allowedReports || allowedReports.accessToAllSubResources) {
+      return reports;
+    }
+
+    const reportIds = allowedReports.resources.map(r => r.resourceUri.split('/').filter(v => v)[1]);
+    const hasAllAccess = reportIds.some(id => id === '*');
+    if (hasAllAccess) {
+      return reports;
+    }
+    const allowedReportsMap = reportIds.reduce((acc, r) => ({ ...acc, [r]: true }), {});
+    return reports.filter(r => allowedReportsMap[r.reportId]);
   }
 
   async update(reportId: string, data: unknown): Promise<void> {

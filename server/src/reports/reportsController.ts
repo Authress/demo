@@ -16,18 +16,23 @@ export default reportController;
 // Get Reports
 reportController.get('/', async (request: Request, response: Response, next: NextFunction) => {
   const userId = response.locals.userId;
+  let allowedReports = null;
 
   /******************** Add Authorization Check ********************/
 
-  // const result = await authressPermissionsWrapper.hasAccessToResource(userId, '/reports', 'Reports:Get');
+  // const result = await authressPermissionsWrapper.hasAccessToResource(userId, '/reports', 'reports:get');
   // if (!result) {
   //   return forbidden(response);
   // }
 
+  const result = await authressPermissionsWrapper.getUserResources(userId, '/reports', 'reports:get');
+  allowedReports = result;
+
   /*****************************************************************/
 
   try {
-    const resourceObject = await resourceRepository.getAll();
+    console.log('****', allowedReports);
+    const resourceObject = await resourceRepository.getAll(allowedReports);
 
     response.status(200).json(resourceObject);
   } catch (error) {

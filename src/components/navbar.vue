@@ -54,17 +54,18 @@
           <button class="btn btn-outline-primary" type="submit" @click.prevent="login">Login</button>
         </form>
 
-        <template v-else class="btn btn-outline-primary" type="submit" @click="logout">
+        <template v-else class="btn btn-outline-primary" type="submit">
           <ul class="nav nav-tabs" style="border: none !important;">
             <li class="nav-item dropdown" style="border: none !important; ">
               <a class="nav-link text-primary" data-bs-toggle="dropdown" href="#" role="button" aria-expanded="false">
                 <i v-if="!state.userIdentity.picture" class="fa fa-user-circle fa-2x" />
                 <img v-else :src="state.userIdentity.picture" referrerpolicy="no-referrer" style="border-radius: 100%; width: 40px">
               </a>
-              <ul class="dropdown-menu" style="width: 250px">
-                <li><span class="dropdown-item text-secondary" href="#">{{ state.userIdentity.name }}</span></li>
+              <ul class="dropdown-menu" style="width: 250px" @click.prevent="() => {}">
+                <li><span class="dropdown-item text-secondary">{{ state.userIdentity.name }}</span></li>
+                <li><small class="dropdown-item text-secondary" @click="copySub()">{{ state.userIdentity.sub }}</small></li>
                 <li><hr class="dropdown-divider text-dark"></li>
-                <li><a class="dropdown-item text-dark" href="#" @click.prevent="logout">Logout</a></li>
+                <li><a class="dropdown-item text-dark" @click.prevent="logout">Logout</a></li>
               </ul>
             </li>
           </ul>
@@ -75,8 +76,17 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
+import { useClipboard } from '@vueuse/core'
+
 import { starterKitIsConfiguredCorrectly, authressLoginClient } from '../authressClient';
+
+const copyTarget = ref('copyTarget');
+const { text, copy, copied, isSupported } = useClipboard({ copyTarget });
+
+const copySub = () => {
+  copy(state.userIdentity.sub);
+};
 
 interface State {
   userIdentity: any
@@ -86,9 +96,7 @@ const state = reactive<State>({ userIdentity: null });
 
 const login = async () => {
   console.log('User logging in');
-  const result = await authressLoginClient.authenticate({});
-  console.log('*****', result);
-  // WHY DOESN"T THIS BUTTON WORK!
+  await authressLoginClient.authenticate({});
 };
 
 const logout = async () => {

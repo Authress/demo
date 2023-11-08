@@ -19,6 +19,7 @@
     "@types/helmet": "^4.0.0",
     "@types/json-stringify-safe": "^5.0.0",
     "@types/node": "^18.15.3",
+    "@vueuse/core": "^10.5.0",
     "authress-sdk": "^2.1.95",
     "aws-sdk": "^2.1490.0",
     "base64url": "^3.0.1",

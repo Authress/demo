@@ -23,6 +23,14 @@ Run `yarn` and then `yarn start`. Or use pnpm to install dependencies and then `
 
 There is a demo experience that has a UI and an service API. The UI makes API calls to the service. We can see the data rendered in the view.
 
+
+# WALKTHROUGH
+
+SET DEMO AS AUTHRESS ACCOUNT:
+https://authress.io/app/#/settings
+
+
+
 ### Starting
 * All data is public, users can log in and see their icon displayed.
 * The API is running and the UI can make these calls, but they are unauthenticated.
@@ -48,7 +56,7 @@ await ensureUserIsLoggedIn(next);
 * We'll add a check to the service code which ensures that a user has the right permission to the resource
 
 ```js reportsController.ts
-const result = await authressPermissionsWrapper.hasAccessToResource(userId, '/reports', 'Reports:Get');
+const result = await authressPermissionsWrapper.hasAccessToResource(userId, '/reports', 'reports:get');
   if (!result) {
     return forbidden(response);
   }
@@ -57,5 +65,12 @@ const result = await authressPermissionsWrapper.hasAccessToResource(userId, '/re
 * Then we'll see that they don't
 * Then go to Authress and configure:
   * A new role
-  * Add the role to the access record for the resource
+  * Add the role to the access record for the global reports
+
+* What if they should only have access to some reports:
+
+```js reportsController.ts
+const result = await authressPermissionsWrapper.getUserResources(userId, '/reports', 'reports:get');
+allowedReports = result;
+```
 * Go back to the UI to display the list which now only has one element

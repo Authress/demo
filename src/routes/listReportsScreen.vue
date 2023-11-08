@@ -1,7 +1,12 @@
 <template>
   <Navbar />
   <div class="px-5 py-3">
-    <template v-if="!selectedReport">
+    <template v-if="state.loading">
+      <div class="d-flex align-items-center justify-content-center" style="height: 80vh">
+        <i class="fa fa-spinner fa-3x fa-spin" />
+      </div>
+    </template>
+    <template v-else-if="!$route.params.reportId">
       <a class="link-horizon" style="margin-right 1rem" @click="goHome">
         <i class="fa-solid fa-left-long" /> Demo Home
       </a>
@@ -28,10 +33,16 @@
               <br>
               User ID: {{ userId }}
               <br>
-              Missing Permission: <strong>Reports:Get</strong>
+              Missing Permission: <strong>reports:get</strong>
               <br>
               Resource: <strong>Reports</strong>
             </template>
+          </div>
+        </template>
+
+        <template v-else-if="!state.reports.length">
+          <div style="border: 1px white solid; border-radius: 10px; padding: 2rem;">
+            <h5 class="mb-2 text-info">You do not have access to any reports yet.</h5>
           </div>
         </template>
 
@@ -51,6 +62,11 @@
 
       </div>
     </template>
+    <template v-else-if="!selectedReport">
+      <div style="border: 1px var(--bs-danger) solid; border-radius: 10px; padding: 2rem; color: var(--bs-danger)">
+        You do not have access to report with ID: {{ $route.params.reportId }}
+      </div>
+    </template>
     <report-screen v-else :report="selectedReport" />
   </div>
 </template>
@@ -68,12 +84,14 @@ const route = useRoute();
 interface State {
   reports: Array<Report>;
   displayError: String;
+  loading: boolean;
 };
 
-const state = reactive<State>({ reports: [], displayError: '' });
+const state = reactive<State>({ loading: true, reports: [], displayError: '' });
 
 const selectedReport = computed(() => {
-  return state.reports.find(r => r.reportId === route.params.reportId);
+  const foundReport = state.reports.find(r => r.reportId === route.params.reportId);
+  return foundReport;
 });
 
 const userId = computed(() => {
@@ -83,8 +101,10 @@ const userId = computed(() => {
 
 reportsService.getReports().then(reports => {
   state.reports = reports;
+  state.loading = false;
 }).catch(error => {
   state.displayError = error.message;
+  state.loading = false;
 });
 
 
