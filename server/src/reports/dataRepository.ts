@@ -16,7 +16,7 @@ const reports: Report = [
 
     { reportId: '004', name: "Found a Glitch",
     status: 'IN_PROGRESS',
-    text: "The team investigating the nature of reality believes they have discovered a glitch in the nature of reality. This paper investigates that our world contains an ether like substance that can be programmed. In this way we are able to enter precise orders in a matrix format and instruct the reality to change at will. So far this experiment has been restricted to only our lab and has not been tested outside, but the leading indicators show that this phenomenon might not be restricted to the subspace that we have been operating in." }
+    text: "The team investigating the nature of reality believes they have discovered a glitch in the fabric of this dimension. This paper investigates how our world contains an ether like substance that can be programmed. In this way we are able to enter precise orders in a matrix format and instruct the reality to change at will. So far this experiment has been restricted to only our lab and has not been tested outside, but the leading indicators show that this phenomenon might not be restricted to the subspace that we have been operating in." }
 ];
 
 class DataRepository {

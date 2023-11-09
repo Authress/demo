@@ -14,6 +14,9 @@ This is the Reports Controller that controls the handling for all the Report end
 * UPDATE Report
 * DELETE Report
 
+authress.hasAccessToResource
+authress.getUserResources
+
 **************************************/
 
 const reportController = express.Router();
@@ -26,15 +29,9 @@ reportController.get('/', async (request: Request, response: Response, next: Nex
 
   /************* Demo Add Authorization Check *************/
 
-  // const result = await authress.hasAccessToResource(userId, '/reports', 'reports:get');
-  // if (!result) {
-  //   return forbidden(response);
-  // }
 
-  // const result = await authress.getUserResources(userId, '/reports', 'reports:get');
-  // allowedReports = result;
 
-  /***************************************************/
+  /********************************************************/
 
   try {
     const resourceObject = await resourceRepository.getAll(allowedReports);

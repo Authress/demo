@@ -25,8 +25,10 @@ export const router = createRouter({
       component: Reports,
       beforeEnter: async (to, from, next) => {
         /************* Demo Route Guard *************/
+
         // await ensureUserIsLoggedIn(next);
-        /**************************************/
+
+        /********************************************/
         next();
       }
     }

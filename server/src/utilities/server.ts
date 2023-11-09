@@ -13,16 +13,18 @@ This is the service entry point that contains registrations for the controllers.
 * Reports Controller
 * Service API Middleware
 
-**************************************/
+app.use(authress);
+
+*************************************************/
 
 // Resources Manages a specific resource in a customer account
 import ReportsController from '../reports/reportsController';
 
 /************* Demo Middleware *************/
 
-// app.use(authress);
 
-/**************************************/
+
+/*******************************************/
 
 app.use('/reports', ReportsController)
 

@@ -40,13 +40,13 @@ SET DEMO AS AUTHRESS ACCOUNT:
 * Add a middleware to get the token and verify it
 
 ```js server.ts
-app.use(authressTokenValidation);
+app.use(authress);
 ```
 
 * Demo that the UI doesn't work anymore because the user isn't logged in.
 * Add a guard in the UI that requires the user to log in.
 
-```js main.ts
+```js router.ts
 await ensureUserIsLoggedIn(next);
 ```
 
@@ -57,7 +57,7 @@ await ensureUserIsLoggedIn(next);
 * We'll add a check to the service code which ensures that a user has the right permission to the resource
 
 ```js reportsController.ts
-const result = await authressPermissionsWrapper.hasAccessToResource(userId, '/reports', 'reports:get');
+const result = await authress.hasAccessToResource(userId, '/reports', 'reports:get');
   if (!result) {
     return forbidden(response);
   }
@@ -71,7 +71,7 @@ const result = await authressPermissionsWrapper.hasAccessToResource(userId, '/re
 * What if they should only have access to some reports:
 
 ```js reportsController.ts
-const result = await authressPermissionsWrapper.getUserResources(userId, '/reports', 'reports:get');
+const result = await authress.getUserResources(userId, '/reports', 'reports:get');
 allowedReports = result;
 ```
 * Go back to the UI to display the list which now only has one element

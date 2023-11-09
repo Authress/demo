@@ -55,7 +55,7 @@
           <div style="border: 1px white solid; border-radius: 10px; padding: 2rem;">
             <div v-for="report in state.reports" :key="report.reportId">
               <div class="hover-select" @click="goToReport(report.reportId)">
-                <div>Report: {{ report.name }}</div>
+                <div>{{ report.name }}</div>
                 <div>ID: {{  report.reportId }}</div>
               </div>
               <hr>

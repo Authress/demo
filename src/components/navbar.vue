@@ -58,7 +58,7 @@
                 <i v-if="!state.userIdentity.picture" class="fa fa-user-circle fa-2x" />
                 <img v-else :src="state.userIdentity.picture" referrerpolicy="no-referrer" style="border-radius: 100%; width: 40px">
               </a>
-              <ul class="dropdown-menu" style="width: 250px" @click.prevent="() => {}">
+              <ul class="dropdown-menu" style="width: 250px; overflow: hidden" @click.prevent="() => {}">
                 <li><span class="dropdown-item text-secondary">{{ state.userIdentity.name }}</span></li>
                 <li><small class="dropdown-item text-secondary" @click="copySub()">{{ state.userIdentity.sub }}</small></li>
                 <li><hr class="dropdown-divider text-dark"></li>
