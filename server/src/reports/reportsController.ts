@@ -1,16 +1,21 @@
 import { AuthressClient } from 'authress-sdk';
+import authress from '../utilities/authressPermissionsWrapper';
 import express, { NextFunction, Request, Response } from 'express';
-
+import { forbidden } from './forbidden';
 import resourceRepository from './dataRepository';
-import authressPermissionsWrapper from '../utilities/authressPermissionsWrapper';
 
-function forbidden(response) {
-  response.status(403).json({ title: 'User does not have access to read this resources' });
-  return;
-}
+/************* UI Router *************
+
+This is the Reports Controller that controls the handling for all the Report endpoints.
+
+* GET Reports
+* CREATE Report
+* UPDATE Report
+* DELETE Report
+
+**************************************/
 
 const reportController = express.Router();
-export default reportController;
 
 /** Routes */
 // Get Reports
@@ -20,12 +25,12 @@ reportController.get('/', async (request: Request, response: Response, next: Nex
 
   /************* Add Authorization Check *************/
 
-  // const result = await authressPermissionsWrapper.hasAccessToResource(userId, '/reports', 'reports:get');
+  // const result = await authress.hasAccessToResource(userId, '/reports', 'reports:get');
   // if (!result) {
   //   return forbidden(response);
   // }
 
-  // const result = await authressPermissionsWrapper.getUserResources(userId, '/reports', 'reports:get');
+  // const result = await authress.getUserResources(userId, '/reports', 'reports:get');
   // allowedReports = result;
 
   /***************************************************/
@@ -44,7 +49,7 @@ reportController.get('/:id', async (request: Request, response: Response, next: 
   const reportId = request.params.id;
 
   // Ensure user has permissions to read the resource resources (userId, resourceUri, permission)
-  // const userHasPermissionToResource = await authressPermissionsWrapper.hasAccessToResource(userId, `/reports/${reportId}`, 'READ');
+  // const userHasPermissionToResource = await authress.hasAccessToResource(userId, `/reports/${reportId}`, 'READ');
   // if (!userHasPermissionToResource) {
   //   response.status(403).json({ title: 'User does not have access to read this resources' });
   //   return;
@@ -64,7 +69,7 @@ reportController.post('/', async (request: Request, response: Response, next: Ne
   const userId = response.locals.userId;
 
   // Ensure user has permissions to create resources (userId, resourceUri, permission)
-  // const userHasPermissionToResource = await authressPermissionsWrapper.hasAccessToResource(userId, `/reports`, 'CREATE');
+  // const userHasPermissionToResource = await authress.hasAccessToResource(userId, `/reports`, 'CREATE');
   // if (!userHasPermissionToResource) {
   //   response.status(403).json({ title: 'User does not have access to create resources' });
   //   return;
@@ -77,7 +82,7 @@ reportController.post('/', async (request: Request, response: Response, next: Ne
 
     // Grant the user access own the resource
     // Owner by default gives full control over this new resource, including the ability to grant others access as well.
-    // await authressPermissionsWrapper.setRoleForUser(accountId, userId, globalIdentifierForResourceId, 'Authress:Owner')
+    // await authress.setRoleForUser(accountId, userId, globalIdentifierForResourceId, 'Authress:Owner')
 
     // Return the new resource
     response.status(200).json({ resourceId: newResourceId });
@@ -85,3 +90,5 @@ reportController.post('/', async (request: Request, response: Response, next: Ne
     next(error);
   }
 });
+
+export default reportController;

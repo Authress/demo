@@ -1,19 +1,26 @@
-// public imports
 import express from "express";
 import boilerplate from "./boilerplate";
-
-// Authress token validation
-import authressTokenValidation from './authressTokenValidation';
-
-// Resources Manages a specific resource in a customer account
-import ReportsController from '../reports/reportsController';
+import authress from './authressTokenValidation';
 
 const app = express();
 boilerplate.setup(app);
 
+
+/************* Service Entry Point *************
+
+This is the service entry point that contains registrations for the controllers.
+
+* Reports Controller
+* Service API Middleware
+
+**************************************/
+
+// Resources Manages a specific resource in a customer account
+import ReportsController from '../reports/reportsController';
+
 /************* Middleware *************/
 
-// app.use(authressTokenValidation);
+// app.use(authress);
 
 /**************************************/
 
