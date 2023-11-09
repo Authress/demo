@@ -20,7 +20,7 @@
           </div>
         </div>
       </div>
-      <p class="text-primary">Click on the Authress logo to learn more</p>
+      <p class="text-primary mt-2"><small>Click on the Authress logo to learn more.</small></p>
     </div>
 </template>
 
