@@ -1,6 +1,6 @@
 <template>
   <Navbar />
-  <div class="px-5 py-3">
+  <div class="page-container px-5 py-3">
     <template v-if="state.loading">
       <div class="d-flex align-items-center justify-content-center" style="height: 80vh">
         <i class="fa fa-spinner fa-3x fa-spin" />
@@ -48,8 +48,6 @@
 
         <template v-else>
           <div style="border: 1px white solid; border-radius: 10px; padding: 2rem;">
-            <h5 class="mb-2">Here are your reports:</h5>
-
             <div v-for="report in state.reports" :key="report.reportId">
               <div class="hover-select" @click="goToReport(report.reportId)">
                 <div>Report: {{ report.name }}</div>

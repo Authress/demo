@@ -61,10 +61,16 @@ button:focus-visible {
   margin: 0 auto;
 }
 .center-container {
+  max-width: 800px;
   place-items: center;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+}
+
+.page-container {
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 @media (prefers-color-scheme: light) {
