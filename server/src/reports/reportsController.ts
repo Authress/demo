@@ -3,6 +3,7 @@ import authress from '../utilities/authressPermissionsWrapper';
 import express, { NextFunction, Request, Response } from 'express';
 import { forbidden } from './forbidden';
 import resourceRepository from './dataRepository';
+import shortUUID from 'short-uuid';
 
 /************* UI Router *************
 
@@ -44,6 +45,26 @@ reportController.get('/', async (request: Request, response: Response, next: Nex
   }
 });
 
+// Create Report
+reportController.post('/', async (request: Request, response: Response, next: NextFunction) => {
+  const userId = response.locals.userId;
+
+  try {
+    // Create the resource in the database
+    const newResourceId = shortUUID.generate();
+    const newResourceObject = await resourceRepository.create(newResourceId, request.body);
+
+    // Grant the user access own the resource
+    // Owner by default gives full control over this new resource, including the ability to grant others access as well.
+    await authress.setRoleForUser(accountId, userId, newResourceId, 'Authress:Owner')
+
+    // Return the new resource
+    response.status(200).json({ resourceId: newResourceId });
+  } catch (error) {
+    next(error);
+  }
+});
+
 reportController.get('/:id', async (request: Request, response: Response, next: NextFunction) => {
   const userId = response.locals.userId;
   const reportId = request.params.id;
@@ -59,33 +80,6 @@ reportController.get('/:id', async (request: Request, response: Response, next: 
     const resourceObject = await resourceRepository.get(reportId);
 
     response.status(200).json(resourceObject);
-  } catch (error) {
-    next(error);
-  }
-});
-
-// Create Report
-reportController.post('/', async (request: Request, response: Response, next: NextFunction) => {
-  const userId = response.locals.userId;
-
-  // Ensure user has permissions to create resources (userId, resourceUri, permission)
-  // const userHasPermissionToResource = await authress.hasAccessToResource(userId, `/reports`, 'CREATE');
-  // if (!userHasPermissionToResource) {
-  //   response.status(403).json({ title: 'User does not have access to create resources' });
-  //   return;
-  // }
-
-  try {
-    // Create the resource in the database
-    const newResourceId = `new-resource-1`;
-    const newResourceObject = await resourceRepository.create(newResourceId, request.body);
-
-    // Grant the user access own the resource
-    // Owner by default gives full control over this new resource, including the ability to grant others access as well.
-    // await authress.setRoleForUser(accountId, userId, globalIdentifierForResourceId, 'Authress:Owner')
-
-    // Return the new resource
-    response.status(200).json({ resourceId: newResourceId });
   } catch (error) {
     next(error);
   }

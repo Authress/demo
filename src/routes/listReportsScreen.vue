@@ -12,7 +12,12 @@
       </a>
       
       <div class="py-4">
-        <h1>TPS Reports</h1>
+        <div class="d-flex justify-content-between">
+          <h1>TPS Reports</h1>
+          <div>
+            <button class="btn btn-outline-info"><i class="fa fa-plus-circle" /> Report</button>
+          </div>
+        </div>
 
         <template v-if="state.displayError === 'Unauthorized'">
           <div style="border: 1px var(--bs-danger) solid; border-radius: 10px; padding: 2rem; color: var(--bs-danger)">
