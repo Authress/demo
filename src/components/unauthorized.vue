@@ -1,6 +1,6 @@
 <template>
   <div class="px-5 py-3">
-      <h1>Authress Unauthorized Page</h1>
+      <h1>Demo - Unauthorized Page</h1>
 
       <div style="border: 1px white solid; border-radius: 10px; padding: 2rem;">
         <div>Please log in.</div>
