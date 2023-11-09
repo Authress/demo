@@ -24,7 +24,7 @@ reportController.get('/', async (request: Request, response: Response, next: Nex
   const userId = response.locals.userId;
   let allowedReports = null;
 
-  /************* Add Authorization Check *************/
+  /************* Demo Add Authorization Check *************/
 
   // const result = await authress.hasAccessToResource(userId, '/reports', 'reports:get');
   // if (!result) {

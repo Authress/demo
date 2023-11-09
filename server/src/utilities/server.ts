@@ -18,7 +18,7 @@ This is the service entry point that contains registrations for the controllers.
 // Resources Manages a specific resource in a customer account
 import ReportsController from '../reports/reportsController';
 
-/************* Middleware *************/
+/************* Demo Middleware *************/
 
 // app.use(authress);
 
