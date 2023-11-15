@@ -75,3 +75,8 @@ const result = await authress.getUserResources(userId, '/reports', 'reports:get'
 allowedReports = result;
 ```
 * Go back to the UI to display the list which now only has one element
+
+## Resource Hierarchies
+* Show Access Record for Sub Resources
+
+* Show Audit Trial
