@@ -27,6 +27,7 @@ There is a demo experience that has a UI and an service API. The UI makes API ca
 # WALKTHROUGH
 
 SET DEMO AS AUTHRESS ACCOUNT:
+0. Demo slides: https://docs.google.com/presentation/d/1wVFtEbk7ilQS5MJzrTABA4dS3z2mCIpv1rBcPdL4_aU/edit#slide=id.g291f1f3c024_0_0
 1. https://authress.io/app/#/settings
 2. Delete comments in report controller
 3. Delete Server.ts middleware
