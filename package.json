@@ -9,7 +9,7 @@
     "start": "vite --port=8080",
     "demo": "run-p start server",
     "server": "sleep 1; eval $(aws-sso eval  --account 337107884712 --role AdministratorAccess) && npx nodemon server/src/utilities/server.ts",
-    "server-ts": "ts-node-dev --respawn --pretty server/src/index.ts"
+    "server-ts": "nodemon --exec ts-node server/src/index.ts --project ./tsconfig.json --pretty"
   },
   "dependencies": {
     "@authress/login": "^2",
@@ -20,7 +20,7 @@
     "@types/json-stringify-safe": "^5.0.0",
     "@types/node": "^18.15.3",
     "@vueuse/core": "^10.5.0",
-    "authress-sdk": "^2.1.95",
+    "authress-sdk": "^2",
     "aws-sdk": "^2.1490.0",
     "base64url": "^3.0.1",
     "bootstrap": "^5.3.2",
@@ -33,7 +33,6 @@
     "openapi-explorer": "^1.0.551",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
-    "ts-node-esm": "^0.0.6",
     "typescript": "^5.0.2",
     "vue": "^3.2.47",
     "vue-router": "4"
@@ -44,6 +43,7 @@
     "cors": "^2.8.5",
     "dotenv": "^16.0.3",
     "error-object-polyfill": "^1.2.25",
+    "esm": "^3.2.25",
     "json-stringify-safe": "^5.0.1",
     "sass": "^1.69.5",
     "serve": "^14.2.0",

@@ -15,7 +15,7 @@ This is the Reports Controller that controls the handling for all the Report end
 * DELETE Report
 
 authress.hasAccessToResource
-authress.getUserResources
+allowedReports = authress.getUserResources
 
 **************************************/
 
