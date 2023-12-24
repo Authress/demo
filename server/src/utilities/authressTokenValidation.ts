@@ -36,7 +36,12 @@ export default async function authressTokenValidation (
     if (error.code === 'Unauthorized' || error.code === 'TokenVerificationError') {
       response.status(401).json({
         title: 'The response is a 401 to your request to the demo. Your request failed the Authress Token Validator check in the src/authressTokenValidation.ts file',
-        error
+        error: {
+          code: error.code,
+          name: error.name,
+          message: error.message,
+          reason: error.reason
+        }
       });
       return;
     }
