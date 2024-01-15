@@ -1,11 +1,3 @@
-import express from "express";
-import boilerplate from "./boilerplate";
-import authress from './authressTokenValidation';
-
-const app = express();
-boilerplate.setup(app);
-
-
 /************* Service Entry Point *************
 
 This is the service entry point that contains registrations for the controllers.
@@ -16,6 +8,13 @@ This is the service entry point that contains registrations for the controllers.
 app.use(authress);
 
 *************************************************/
+
+import express from "express";
+import boilerplate from "./boilerplate";
+import authress from './authressTokenValidation';
+
+const app = express();
+boilerplate.setup(app);
 
 // Resources Manages a specific resource in a customer account
 import ReportsController from '../reports/reportsController';

@@ -1,11 +1,4 @@
-import { AuthressClient } from 'authress-sdk';
-import authress from '../utilities/authressPermissionsWrapper';
-import express, { NextFunction, Request, Response } from 'express';
-import { forbidden } from './forbidden';
-import resourceRepository from './dataRepository';
-import shortUUID from 'short-uuid';
-
-/************* UI Router *************
+/************* Reports Controller *************
 
 This is the Reports Controller that controls the handling for all the Report endpoints.
 
@@ -18,6 +11,13 @@ authress.hasAccessToResource
 allowedReports = authress.getUserResources
 
 **************************************/
+
+import { AuthressClient } from 'authress-sdk';
+import authress from '../utilities/authressPermissionsWrapper';
+import express, { NextFunction, Request, Response } from 'express';
+import { forbidden } from './forbidden';
+import resourceRepository from './dataRepository';
+import shortUUID from 'short-uuid';
 
 const reportController = express.Router();
 
