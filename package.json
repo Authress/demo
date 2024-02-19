@@ -6,9 +6,10 @@
   "scripts": {
     "preview": "vite preview",
     "build": "vue-tsc && vite build",
-    "start": "vite --port=8080",
-    "demo": "run-p start server",
-    "server": "sleep 1; eval $(aws-sso eval  --account 337107884712 --role AdministratorAccess) && npx nodemon server/src/utilities/server.ts",
+    "start": "run-p demo-ui demo-server",
+    "demo": "run-p demo-ui demo-server",
+    "demo-ui": "vite --port=8080",
+    "demo-server": "sleep 1; eval $(aws-sso eval  --account 337107884712 --role AdministratorAccess) && npx nodemon server/src/utilities/server.ts",
     "server-ts": "nodemon --exec ts-node server/src/index.ts --project ./tsconfig.json --pretty"
   },
   "dependencies": {

@@ -24,21 +24,25 @@ const reportController = express.Router();
 /** Routes */
 // Get Reports
 reportController.get('/', async (request: Request, response: Response, next: NextFunction) => {
-  const userId = response.locals.userId;
-  let allowedReports = null;
-
-  /************* Demo Add Authorization Check *************/
-
-
-
-  /********************************************************/
-
   try {
-    const resourceObject = await resourceRepository.getAll(allowedReports);
+    const userId = response.locals.userId;
+    let allowedReports = null;
 
-    response.status(200).json(resourceObject);
+    /************* Demo Add Authorization Check *************/
+
+
+
+    /********************************************************/
+
+    try {
+      const resourceObject = await resourceRepository.getAll(allowedReports);
+
+      response.status(200).json(resourceObject);
+    } catch (error) {
+      next(error);
+    }
   } catch (error) {
-    next(error);
+    console.error("Failed to compile report controller", error);
   }
 });
 
