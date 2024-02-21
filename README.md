@@ -1,4 +1,8 @@
-# Authress Starter Kit: Vue
+<p align="center">
+  <img src="https://authress.io/static/images/linkedin-banner.png" alt="Authress media banner">
+</p>
+
+# Authress Interactive Demo
 
 A repository that contains an Vue example that uses Authress to Login.
 
