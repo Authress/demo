@@ -1,4 +1,4 @@
-import authress, { AuthressClient, ServiceClientTokenProvider, UserResources, UserIdentity, Connection, Tenant, UnauthorizedError, ApiError, TokenVerifier } from 'authress-sdk';
+import authress, { AuthressClient, ServiceClientTokenProvider, UserResources, UserIdentity, Connection, Tenant, UnauthorizedError, ApiError, TokenVerifier } from '@authress/sdk';
 const { ConnectionData } = authress;
 import { AssignedUserRoles } from './dtos';
 import encryptionManager from './encryptionManager';
@@ -137,7 +137,7 @@ class AuthressPermissionsWrapper {
 
   async getUserResources(userId: string, resourceUri: string, permission: string = 'READ'): Promise<UserResources> {
     const authressClient = await this.getAuthressClient();
-    const response = await authressClient.userPermissions.getUserResources(userId, resourceUri, 20, undefined, permission);
+    const response = await authressClient.userPermissions.getUserResources(userId, resourceUri, 20, undefined, permission, 'INCLUDE_NESTED');
     return response.data;
   }
 }

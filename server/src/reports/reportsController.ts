@@ -12,7 +12,7 @@ allowedReports = authress.getUserResources
 
 **************************************/
 
-import { AuthressClient } from 'authress-sdk';
+import { AuthressClient } from '@authress/sdk';
 import authress from '../utilities/authressPermissionsWrapper';
 import express, { NextFunction, Request, Response } from 'express';
 import { forbidden } from './forbidden';

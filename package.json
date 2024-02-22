@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@authress/login": "^2",
+    "@authress/sdk": "^2",
     "@popperjs/core": "^2.11.8",
     "@types/cors": "^2.8.13",
     "@types/express": "^4.17.17",
@@ -21,7 +22,6 @@
     "@types/json-stringify-safe": "^5.0.0",
     "@types/node": "^18.15.3",
     "@vueuse/core": "^10.5.0",
-    "authress-sdk": "^2",
     "aws-sdk": "^2.1490.0",
     "base64url": "^3.0.1",
     "bootstrap": "^5.3.2",

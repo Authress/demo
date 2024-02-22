@@ -1,4 +1,4 @@
-import { UserResources } from "authress-sdk";
+import { UserResources } from "@authress/sdk";
 
 const reports: Report = [
   { reportId: '001',
@@ -25,7 +25,7 @@ class DataRepository {
   }
 
   async getAll(allowedReports: UserResources): Promise<Report[]> {
-    if (!allowedReports || allowedReports.accessToAllSubResources) {
+    if (!allowedReports) {
       return reports;
     }
 
