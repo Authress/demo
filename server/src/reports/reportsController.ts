@@ -28,7 +28,7 @@ reportController.get('/', async (request: Request, response: Response, next: Nex
     const userId = response.locals.userId;
     let allowedReports = null;
 
-    /************* Demo Add Authorization Check *************/
+    /************* Demo Add Authorization Check (reports:get) *************/
 
 
 
