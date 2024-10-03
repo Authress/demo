@@ -7,12 +7,12 @@
 
         <br>
         <div class="d-flex justify-content-center">
-          <button style="margin-right 1rem" class="btn btn-primary" @click="login">
+          <ActivityButton style="margin-right: 1rem;" class="btn btn-primary" :action="() => login()">
             Login
-          </button>
+          </ActivityButton>
         </div>
 
-        <div v-if="state.errorMessage" style="color: #dc3545">
+        <div v-if="state.errorMessage" style="color: #dc3545;">
           <br>
           <div>Failed to navigate to log due to an error with your configuration in the <code>src/authress.ts</code> file.</div>
           {{ state.errorMessage }}
@@ -25,6 +25,7 @@
 import { authressLoginClient } from "../authressClient";
 import { reactive } from 'vue';
 import { useRouter } from 'vue-router';
+import ActivityButton from "./activityButton.vue";
   
 const router = useRouter();
 

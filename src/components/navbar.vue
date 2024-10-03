@@ -48,7 +48,7 @@
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
         </ul>
         <form v-if="!state.userIdentity" class="d-flex">
-          <button class="btn btn-outline-primary" type="submit" @click.prevent="login">Login</button>
+          <ActivityButton class="btn btn-outline-primary" type="button" :action="() => login()">Login</ActivityButton>
         </form>
 
         <template v-else class="btn btn-outline-primary" type="submit">
@@ -77,6 +77,7 @@ import { reactive, ref } from 'vue';
 import { useClipboard } from '@vueuse/core'
 
 import { starterKitIsConfiguredCorrectly, authressLoginClient } from '../authressClient';
+import ActivityButton from './activityButton.vue';
 
 const copyTarget = ref('copyTarget');
 const { text, copy, copied, isSupported } = useClipboard({ copyTarget });
