@@ -19,11 +19,11 @@ import { forbidden } from './forbidden';
 import resourceRepository from './dataRepository';
 import shortUUID from 'short-uuid';
 
-const reportController = express.Router();
+const reportsController = express.Router();
 
 /** Routes */
 // Get Reports
-reportController.get('/', async (request: Request, response: Response, next: NextFunction) => {
+reportsController.get('/', async (request: Request, response: Response, next: NextFunction) => {
   try {
     const userId = response.locals.userId;
     let allowedReports = null;
@@ -47,7 +47,7 @@ reportController.get('/', async (request: Request, response: Response, next: Nex
 });
 
 // Create Report
-reportController.post('/', async (request: Request, response: Response, next: NextFunction) => {
+reportsController.post('/', async (request: Request, response: Response, next: NextFunction) => {
   const userId = response.locals.userId;
 
   try {
@@ -66,7 +66,7 @@ reportController.post('/', async (request: Request, response: Response, next: Ne
   }
 });
 
-reportController.get('/:id', async (request: Request, response: Response, next: NextFunction) => {
+reportsController.get('/:id', async (request: Request, response: Response, next: NextFunction) => {
   const userId = response.locals.userId;
   const reportId = request.params.id;
 
@@ -86,4 +86,4 @@ reportController.get('/:id', async (request: Request, response: Response, next: 
   }
 });
 
-export default reportController;
+export default reportsController;
