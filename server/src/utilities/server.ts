@@ -21,7 +21,6 @@ import ReportsController from '../reports/reportsController';
 
 /************* 1. [DEMO] Authorization Middleware *************/
 
-
 /*******************************************/
 
 app.use('/reports', ReportsController)

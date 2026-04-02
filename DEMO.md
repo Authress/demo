@@ -2,38 +2,35 @@
 
 ## Pre-Demo: Brand Customization
 
-Before the demo, update the app's branding to match the customer's brand. The user will provide a URL (website or brand page) — pull colors, logos, and style from there and update the following files:
+Before the demo, update the app's branding to match the customer's brand. The user will provide a URL (website or brand page) — fetch it, extract brand colors, logo, and company name, then update the config files below.
 
-### Colors
-- [colors.scss](src/assets/styles/colors.scss) — SCSS variables for the full color palette:
-  - `$primary` — main brand color (buttons, accents)
-  - `$secondary` — secondary color (navbar background, dark elements)
-  - `$dark` — darkest background color
-  - `$highlight` — links and interactive highlights
-  - `$gray`, `$border`, `$embossed`, `$horizon` — supporting neutrals
-- [styles.scss](src/assets/styles/styles.scss) — Bootstrap theme overrides using the above variables
-- [style.css](src/assets/style.css) — global CSS with hardcoded color values for dark/light themes and brand references
+### What to update
 
-### Logos
-- [src/assets/logo.svg](src/assets/logo.svg) — full-width logo
-- [src/assets/logoText.svg](src/assets/logoText.svg) — text version of the logo
-- [src/public/logo.svg](src/public/logo.svg) — compact/icon logo (used as favicon)
+All branding is centralized into three locations:
 
-### Inline SVG & Component References
-- [navbar.vue](src/components/navbar.vue) — has an inline SVG logo with `.logost0` fill/stroke colors hardcoded
-- [home.vue](src/components/home.vue) — logo image and brand-colored buttons/text
+1. **Company identity** — [demo-config.ts](src/demo-config.ts)
+   - Company name (used in page title, headings, alt text)
+   - Company website URL (used in logo link)
 
-### Page Metadata
-- [index.html](index.html) — page title and favicon reference
+2. **Color palette** — [colors.scss](src/assets/styles/colors.scss)
+   - `$primary` — main brand color (buttons, accents, highlights)
+   - `$secondary` — secondary color (navbar background, logo background)
+   - `$dark` — darkest background color (page body)
+   - `$highlight` — links and interactive highlights
+   - Supporting neutrals: `$gray`, `$border`, `$embossed`, `$horizon`
+   - All other files (style.scss, navbar.vue, component styles) reference these variables — no other files need color changes.
+   - **Accessibility tip:** If the brand's primary color is light or low-contrast, add `$min-contrast-ratio: 2;` (or higher) before the Bootstrap variable imports to force readable text on colored buttons.
+
+3. **Logo SVG** — replace the single logo file:
+   - [src/assets/logo.svg](src/assets/logo.svg) — the single logo source (used by home page and navbar as `<img>`)
+   - The favicon ([src/public/logo.svg](src/public/logo.svg)) always stays as the Authress logo — do not touch it.
 
 ### Steps
 1. User provides customer URL
 2. Fetch the URL, extract brand colors, logo URLs, and company name
-3. Update colors.scss with the new palette
-4. Update style.css hardcoded color values to match
-5. Replace all three logo SVGs with the customer's logo
-6. Update the inline SVG in navbar.vue
-7. Update the page title in index.html
+3. Update `demo-config.ts` with company name and website
+4. Update `colors.scss` with the new color palette
+5. Replace `src/assets/logo.svg` with the customer's logo
 
 ## Runtime Demo
 

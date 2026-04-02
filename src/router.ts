@@ -11,6 +11,7 @@ import { createRouter, createWebHashHistory } from 'vue-router';
 import Home from './components/home.vue';
 import Unauthorized from './components/unauthorized.vue';
 import Reports from './routes/listReportsScreen.vue';
+import { ensureUserIsLoggedIn } from './authressClient';
 
 export const router = createRouter({
   history: createWebHashHistory(),
@@ -26,11 +27,8 @@ export const router = createRouter({
       beforeEnter: async (to, from, next) => {
         /************* 2. [DEMO] Demo Route Guard ************/
 
-
-
-        /*******************************************/
-
         next();
+        /*******************************************/
       }
     }
   ]

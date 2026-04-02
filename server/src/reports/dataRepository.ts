@@ -4,7 +4,7 @@ const reports: Report = [
   { reportId: '001',
     name: 'Application of Tachyon Pulses',
     status: 'COMPLETED',
-    text: 'This paper suggests that mental units called psychons by Eccles could be tachyons defined theoretically by physicists sometime ago. Although experiments to detect faster-than-light particles have not been successful so far, recently, there has been renewed interest in tachyon theories in various branches of physics. We suggest that tachyon theories may be applicable to brain physics. Eccles proposed an association between psychons and what he called dendrons which are dendrite bundles and basic anatomical units of the neocortex for reception. We show that a zero-energy tachyon could act as a trigger for exocytosis (modeled by Friedrich Beck as a quantum tunneling process), not merely at a single presynaptic terminal but at all selected terminals in the interacting dendron by momentarily transferring momentum to vesicles, thereby decreasing the effective barrier potential and increasing the probability of exocytosis at all boutons at the same time. This is consistent with the view of tachyons, which treats them as strictly non-local phenomenon produced and absorbed instantaneously and non-locally by detectors acting in a coherent and cooperative way.' },
+    text: `This paper suggests that mental units called psychons by Eccles could be tachyons defined theoretically by physicists sometime ago. Although experiments to detect faster-than-light particles have not been successful so far, recently, there has been renewed interest in tachyon theories in various branches of physics. We suggest that tachyon theories may be applicable to brain physics. Eccles proposed an association between psychons and what he called dendrons which are dendrite bundles and basic anatomical units of the neocortex for reception.<br><br> We show that a zero-energy tachyon could act as a trigger for exocytosis (modeled by Friedrich Beck as a quantum tunneling process), not merely at a single presynaptic terminal but at all selected terminals in the interacting dendron by momentarily transferring momentum to vesicles, thereby decreasing the effective barrier potential and increasing the probability of exocytosis at all boutons at the same time. This is consistent with the view of tachyons, which treats them as strictly non-local phenomenon produced and absorbed instantaneously and non-locally by detectors acting in a coherent and cooperative way.` },
 
   { reportId: '002', name: "We weren't able to find the droids we were looking for",
     status: 'FAILED',
@@ -21,7 +21,7 @@ const reports: Report = [
 
 class DataRepository {
   async get(reportId: string): Promise<Report> {
-    return reports.find(r => r.reportId === reportId);
+    return reports.find(r => r.reportId === reportId || reportId && !isNaN(reportId) && Number(r.reportId) === Number(reportId));
   }
 
   async getAll(allowedReports: UserResources): Promise<Report[]> {
@@ -35,15 +35,15 @@ class DataRepository {
       return reports;
     }
     const allowedReportsMap = reportIds.reduce((acc, r) => ({ ...acc, [r]: true }), {});
-    return reports.filter(r => allowedReportsMap[r.reportId]);
+    return reports.filter(r => allowedReportsMap[r.reportId] || r.reportId && allowedReportsMap[Number(r.reportId)]);
   }
 
   async update(reportId: string, data: unknown): Promise<void> {
-    reports = reports.filter(r => r.reportId !== reportId).concat({ reportId: newReportId, ...data });
+    reports = reports.filter(r => reportId && r.reportId !== reportId && Number(r.reportId) !== Number(reportId)).concat({ reportId: newReportId, ...data });
   }
 
   async delete(reportId: string): Promise<void> {
-    reports = reports.filter(r => r.reportId !== reportId);
+    reports = reports.filter(r => reportId && r.reportId !== reportId && Number(r.reportId) !== Number(reportId));
   }
 
   async create(newReportId: string, data: unknown): Promise<void> {

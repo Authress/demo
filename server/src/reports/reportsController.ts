@@ -30,7 +30,6 @@ reportsController.get('/', async (request: Request, response: Response, next: Ne
 
     /************* 3. [DEMO] Add Authorization Check (reports:get) *************/
 
-
     /*******************************************/
 
     try {
