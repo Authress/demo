@@ -133,7 +133,7 @@ class AuthressPermissionsWrapper {
     }
   }
 
-  /*************************************************/
+  /*******************************************/
 
   async getUserResources(userId: string, resourceUri: string, permission: string = 'READ'): Promise<UserResources> {
     const authressClient = await this.getAuthressClient();

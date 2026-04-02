@@ -19,8 +19,7 @@ boilerplate.setup(app);
 // Resources Manages a specific resource in a customer account
 import ReportsController from '../reports/reportsController';
 
-/************* Demo Middleware *************/
-
+/************* 1. [DEMO] Authorization Middleware *************/
 
 
 /*******************************************/

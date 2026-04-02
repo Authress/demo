@@ -28,11 +28,10 @@ reportsController.get('/', async (request: Request, response: Response, next: Ne
     const userId = response.locals.userId;
     let allowedReports = null;
 
-    /************* Demo Add Authorization Check (reports:get) *************/
+    /************* 3. [DEMO] Add Authorization Check (reports:get) *************/
 
 
-
-    /********************************************************/
+    /*******************************************/
 
     try {
       const resourceObject = await resourceRepository.getAll(allowedReports);

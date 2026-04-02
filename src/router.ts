@@ -4,7 +4,7 @@ This is the UI Router. It lists the routes for the website that runs the report 
 
 Below is a list of routes with the component for the page.
 
-**************************************/
+*******************************************/
 
 import { createRouter, createWebHashHistory } from 'vue-router';
 
@@ -24,13 +24,11 @@ export const router = createRouter({
       name: 'ReportList',
       component: Reports,
       beforeEnter: async (to, from, next) => {
-        // await ensureUserIsLoggedIn(next);
-
-        /************* Demo Route Guard *************/
+        /************* 2. [DEMO] Demo Route Guard ************/
 
 
 
-        /********************************************/
+        /*******************************************/
 
         next();
       }
